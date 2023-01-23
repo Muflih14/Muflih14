@@ -1,0 +1,10 @@
+body {
+   background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);   margin-top: 100px;
+}
+.content {
+   height: 800px;
+   text-align: center;
+   margin-top: 50px;
+   background-color: white;
+   padding: 300px;
+}
