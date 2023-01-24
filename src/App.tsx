@@ -1,9 +1,9 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import About from './assets/About/About';
-import Home from './assets/Home/Home';
-import LogIn from './assets/LOGIN/Login';
-import ToDo from './assets/Main/ToDoMain';
-import Projects from "./assets/Projects/projects";
+import About from './components/About/About';
+import Home from './components/Home/Home';
+import LogIn from "./components/LOGIN/Login";
+import ToDo from "./components/Main/ToDoMain";
+import Projects from "./components/Projects/projects";
 import './App.css';
 
 export default function App() {
