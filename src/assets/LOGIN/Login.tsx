@@ -14,9 +14,9 @@ function LogIn() {
         <h2>Log IN</h2>
 
         <div className="buttons">
-          <button className="button">
+          {/* <button className="button">
             <a onClick={() => navigate("/projects")}>CONNECT TO WALLET</a>
-          </button>
+          </button> */}
           <button className="button">
             <a href="https://bitcoin.org/en/choose-your-wallet">
               CREATE A WALLET
