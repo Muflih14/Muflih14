@@ -16,11 +16,11 @@ function LogIn() {
        <h2>Log IN</h2>
 
     <div className='buttons'>
-       <button className="button"><a onClick={() => navigate('/projects')}>CONNECT TO WALLET</a></button>
+       <button className="button"><a href="/projects">CONNECT TO WALLET</a></button>
        <Connect />
        <button className="button"><a href="https://bitcoin.org/en/choose-your-wallet">CREATE A WALLET</a></button>
     </div>
-
+    {/* onClick={() => navigate('/projects')} */}
     </div>
     </>
     );

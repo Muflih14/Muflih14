@@ -60,12 +60,12 @@ const Connect = () => {
         <>
 		<div className="connectWallet">
 			<button className="button" onClick={connectWalletHandler}>{connButtonText}</button><br/>
-			{/* <div className='accountDisplay'>
+			<div className='accountDisplay'>
 				<h5>Address: {defaultAccount}</h5>
 				<h5>Balance: {userBalance}</h5>
-			</div> */}
+			</div>
 		</div>
-        {/* <div>{errorMessage} </div> */}
+        <div>{errorMessage} </div>
         </>
 	);
 }

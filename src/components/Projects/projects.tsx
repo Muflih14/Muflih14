@@ -16,7 +16,7 @@ function Projects() {
 
     <ul className='list'>
        {/* <button className="button"><a onClick={() => navigate('/todolist')}>CONNECT TO WALLET</a></button> */}
-        <li><a onClick={() => navigate('/todolist')}> Become a Solidity Developer</a></li>
+        <li><a href='/todoList'> Become a Solidity Developer</a></li>
         <li> Become a Soldier </li>
         <li> Become a Teacher</li>
         <li> Become a designer </li>
