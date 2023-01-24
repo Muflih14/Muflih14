@@ -1,10 +1,7 @@
 import React from "react";
-import {useNavigate} from 'react-router-dom';
 import './NavBar.css'; 
 
 function NavBar() {
-    
-    const navigate = useNavigate();
 
  return (
     <div className="container-fluid">

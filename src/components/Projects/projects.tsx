@@ -1,10 +1,7 @@
 import NavBar from "../NavBar/NavBar";
-import {useNavigate} from 'react-router-dom';
 import './projects.css';
 
 function Projects() {
-
-    const navigate = useNavigate();
 
  return (
     <>

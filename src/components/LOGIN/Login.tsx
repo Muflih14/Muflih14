@@ -1,11 +1,11 @@
 import NavBar from "../NavBar/NavBar";
-import {useNavigate} from 'react-router-dom';
+// import {useNavigate} from 'react-router-dom';
 import Connect from "./connect";
 import './login.css';
 
 function LogIn() {
 
-    const navigate = useNavigate();
+   //  const navigate = useNavigate();
 
  return (
     <>
