@@ -1,14 +1,14 @@
 import { UpdateFilter, OnSelect } from '../../types';
 
-interface TodoFilterProps {
+interface TaskFilterProps {
   updateFilter: UpdateFilter;
   filt: string;
 }
 
-export default function TodoFilter({ updateFilter, filt }: TodoFilterProps) {
+export default function TaskFilter({ updateFilter, filt }: TaskFilterProps) {
   const buttons = [
     { name: 'all', label: 'All' },
-    { name: 'like', label: 'Completed' }
+    { name: 'completed', label: 'Completed' }
   ];
 
   const onSelect: OnSelect = (item) => {

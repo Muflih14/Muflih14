@@ -1,18 +1,23 @@
-import { createContext } from 'react';
-import { RemoveTodo, OnToggleImportant, OnToggleLike, UpdateTodo } from '../../types';
+import { createContext } from "react";
+import {
+  RemoveTask,
+  OnToggleImportant,
+  OnToggleCompleted,
+  UpdateTask,
+} from "../../types";
 
 interface ContextProps {
-  removeTodo: RemoveTodo;
-  updateTodo: UpdateTodo;
+  removeTask: RemoveTask;
+  updateTask: UpdateTask;
   onToggleImportant: OnToggleImportant;
-  onToggleLike: OnToggleLike;
+  onToggleCompleted: OnToggleCompleted;
 }
 
 const Context = createContext<ContextProps>({
-  removeTodo: () => {},
-  updateTodo: () => {},
+  removeTask: () => {},
+  updateTask: () => {},
   onToggleImportant: () => {},
-  onToggleLike: () => {}
+  onToggleCompleted: () => {},
 });
 
 export default Context;

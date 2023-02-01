@@ -2,7 +2,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import About from './components/About/About';
 import Home from './components/Home/Home';
 import LogIn from "./components/LOGIN/Login";
-import ToDo from "./components/Main/ToDoMain";
+import Task from "./components/Main/TaskMain";
 import Projects from "./components/Projects/projects";
 import './App.css';
 
@@ -15,7 +15,7 @@ export default function App() {
         <Route path='/about' element={<About />} />
         <Route path='/login' element={<LogIn />} />
         <Route path='/projects' element={<Projects />} />
-        <Route path='/todolist' element={<ToDo />} />
+        <Route path='/tasklist' element={<Task />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,11 +1,11 @@
-export interface ITodo {
+export interface ITask {
   id: number;
   label: string;
   important: boolean;
-  like: boolean;
+  completed: boolean;
 }
 export interface IData {
-  data: ITodo[];
+  data: ITask[];
 }
 export interface IEdit {
   id: number | null;
@@ -15,13 +15,13 @@ export interface IArray {
   name: string;
   label: string;
 }
-export type RemoveTodo = (id: number) => void;
-export type UpdateTodo = (id: number, value: ITodo) => void;
+export type RemoveTask = (id: number) => void;
+export type UpdateTask = (id: number, value: ITask) => void;
 export type OnToggleImportant = (id: number) => void;
-export type OnToggleLike = (id: number) => void;
-export type AddTodo = (todo: ITodo) => void;
+export type OnToggleCompleted = (id: number) => void;
+export type AddTask = (task: ITask) => void;
 export type UpdateSearch = (term: string) => void;
-export type SearchTodo = (items: ITodo[], term: string) => ITodo[];
+export type SearchTask = (items: ITask[], term: string) => ITask[];
 export type UpdateFilter = (filt: string) => void;
 export type OnSelect = (item: IArray) => void;
-export type FilterTodo = (items: ITodo[], filt: string) => ITodo[];
+export type FilterTask = (items: ITask[], filt: string) => ITask[];

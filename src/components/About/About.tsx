@@ -1,24 +1,25 @@
 import NavBar from "../NavBar/NavBar";
-import './about.css';
-    
+import "./about.css";
 
 function About() {
-
- return (
+  return (
     <>
-    <div>
+      <div>
         <NavBar />
-    </div>
-    <div className="content">
+      </div>
+      <div className="content">
         <h2>About Us</h2>
 
-        <p> STEPIFY is a Decentralized Web Application for<br/>
-            properly monitoring your project steps from start to finish, <br/>
-            ensuring that all the steps necessary to complete your project <br/>
-            have been completed.
+        <p>
+          {" "}
+          STEPIFY is a Decentralized Web Application for
+          <br />
+          properly monitoring your project steps from start to finish, <br />
+          ensuring that all the steps necessary to complete your project <br />
+          have been completed.
         </p>
-    </div>
+      </div>
     </>
-    );
- }
+  );
+}
 export default About;

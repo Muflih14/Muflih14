@@ -1,4 +1,4 @@
-# react-app-typescript-fv1
+# Stepify Project Manager
 
 Stepify is a Decentralized Single-page Project Management application, written using Create React App, Typescript, React Hooks, Hardhat, with full create, read, update, delete, search and filter functionality. It helps you keep track of all tasks outlined to complete a project from scratch to finish, monitor the progress of your project and ascertain when a project has been completed.
 
