@@ -1,4 +1,5 @@
 import NavBar from "../NavBar/NavBar";
+import {Link} from "react-router-dom";
 import "./projects.css";
 
 function Projects() {
@@ -10,14 +11,14 @@ function Projects() {
       <div className="content">
         <h2>Projects in Progress</h2>
 
-        <ul className="list">
-          <li>
-            <a href="/taskList"> Become a Solidity Developer</a>
-          </li>
-          <li> Become a Soldier </li>
-          <li> Become a Teacher</li>
-          <li> Become a designer </li>
-        </ul>
+        <p className="p-list">
+          <button className="list-button">
+            <Link to="/taskList">Become a Solidity Developer</Link>
+          </button>
+          <button className="list-button"> Become a Soldier </button>
+          <button className="list-button"> Become a Teacher</button>
+          <button className="list-button"> Become a designer </button>
+        </p>
       </div>
     </>
   );
