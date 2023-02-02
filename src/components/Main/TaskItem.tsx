@@ -38,6 +38,7 @@ export default function TaskItem({ task }: TaskItemProps) {
   return (
     <div className={classNames}>
       <span onClick={() => onToggleCompleted(task.id)} className='app-list-item-label'>
+        <i className='fa fa-check'></i>
         {task.label}
       </span>
       <div className='d-flex justify-content-center align-itme-center'>
@@ -54,7 +55,6 @@ export default function TaskItem({ task }: TaskItemProps) {
         >
           <i className='fa fa-pencil'></i>
         </button>
-        <i className='fa fa-check'></i>
       </div>
     </div>
   );
