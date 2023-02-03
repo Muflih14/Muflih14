@@ -27,8 +27,7 @@
 // });
 
 
-const { ethers } = require("hardhat");
-
+var { ethers } = require("hardhat");
 
 async function main() {
   const TaskManager = await ethers.getContractFactory("Tasks");
