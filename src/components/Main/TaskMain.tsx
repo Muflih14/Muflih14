@@ -21,24 +21,23 @@ import TaskFilter from "./TaskFilter";
 import Context from "./Context";
 import "./style.css";
 import Web3 from "web3";
+// import { ethers } from "ethers";
 
 const { abi } = require("../../abi/Tasks.json");
 const contractAddress = process.env.TASK_CONTRACT_ADDRESs!;
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-
-async function getAccount() {
-  let accounts = await web3.eth.getAccounts();
-  web3.eth.defaultAccount = accounts[0];
-  console.log(web3.eth.defaultAccount + " account detected");
-  return web3.eth.defaultAccount;
-}
+const provider =
+  "https://spring-muddy-energy.ethereum-goerli.discover.quiknode.pro/1a6cb2cc56c1256ac3d90d4146fdcadcf69a827d/";
+const web3Provider = new Web3.providers.HttpProvider(provider);
+const web3 = new Web3(web3Provider || "http://localhost:8545");
+web3.eth.getBlockNumber().then((result) => {
+  console.log("Latest Ethereum Block is ", result);
+});
 
 export default function Task() {
   const [tasks, setTasks] = useState(initialTask);
   const [term, setTerm] = useState("");
   const [filt, setFilt] = useState("all");
 
-  // Set contract //
   const contract = new web3.eth.Contract(abi, contractAddress);
 
   const addTask: AddTask = async (newData) => {
@@ -46,37 +45,12 @@ export default function Task() {
       data: [...prevState.data, newData],
     }));
     try {
-      await getAccount();
-      console.log("account gotten");
-      try {
-        const numberOfTask = await contract.methods
-          .getTaskCount()
-          .call({ from: web3.eth.defaultAccount });
-        console.log("Number of Tasks are " + numberOfTask);
-        if (numberOfTask !== 0) {
-          console.log("Start fetching task ...");
-          let taskIterator = 0;
-          while (taskIterator < numberOfTask) {
-            try {
-              let task = await contract.methods
-                .getTask(taskIterator)
-                .call({ from: web3.eth.defaultAccount });
-              if (task[0] !== "") {
-                updateTask(taskIterator, task[1]);
-              } else {
-                console.log("The index " + taskIterator + " is empty");
-              }
-            } catch {
-              console.log("Failed to get Task " + taskIterator);
-            }
-            taskIterator++;
-          }
-        }
-      } catch {
-        console.log("Failed to get task count from blockchain");
-      }
+      await contract.methods
+        .addTask(newData)
+        .send({ from: web3.eth.defaultAccount });
+      console.log("Add task " + newData + " to blockchain");
     } catch {
-      console.log("Failed to get the account");
+      console.log("Failed to add task to EVM");
     }
   };
 
