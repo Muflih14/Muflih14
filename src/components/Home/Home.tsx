@@ -1,4 +1,6 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
 import "./home.css";
 
 function Home() {
@@ -18,6 +20,8 @@ function Home() {
 
         {/* header */}
         <header>
+          <NavBar />
+
           <div className="logo">
             <span>S</span>
           </div>

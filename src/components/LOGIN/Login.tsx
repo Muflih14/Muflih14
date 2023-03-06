@@ -11,7 +11,7 @@ function LogIn() {
       <div className="content">
         <h2>Log IN</h2>
 
-        <div className="buttons">    
+        <div className="buttons">
           <Connect />
           <button className="button">
             <a href="https://bitcoin.org/en/choose-your-wallet">
