@@ -11,8 +11,7 @@ import {
   FilterTask,
   ITask,
 } from "../../types";
-import { useState } from "react";
-import { initialTask } from "./initialTask";
+import { useEffect, useState } from "react";
 import TaskList from "./TaskList";
 import TaskForm from "./TaskForm";
 import TaskSearch from "./TaskSearch";
@@ -20,34 +19,31 @@ import TaskHeader from "./TaskHeader";
 import TaskFilter from "./TaskFilter";
 import Context from "./Context";
 import "./style.css";
-import Web3 from "web3";
-// import { ethers } from "ethers";
+import {CONTRACT_ADDRESS} from "../../constants";
+import {useAccount, useContract, useSigner} from "wagmi";
+import artifacts from "../../../src/artifacts/contracts/Tasks.sol/Tasks.json";
 
-const { abi } = require("../../abi/Tasks.json");
-const contractAddress = process.env.TASK_CONTRACT_ADDRESs!;
-const provider =
-  "https://spring-muddy-energy.ethereum-goerli.discover.quiknode.pro/1a6cb2cc56c1256ac3d90d4146fdcadcf69a827d/";
-const web3Provider = new Web3.providers.HttpProvider(provider);
-const web3 = new Web3(web3Provider || "http://localhost:8545");
-web3.eth.getBlockNumber().then((result) => {
-  console.log("Latest Ethereum Block is ", result);
-});
 
 export default function Task() {
-  const [tasks, setTasks] = useState(initialTask);
+  const [tasks, setTasks] = useState({data:[] as ITask[]});
   const [term, setTerm] = useState("");
   const [filt, setFilt] = useState("all");
 
-  const contract = new web3.eth.Contract(abi, contractAddress);
+  const {address} = useAccount()
+  const {data: signer} = useSigner();
+  const contract = useContract({
+    address: CONTRACT_ADDRESS,
+    abi: artifacts.abi,
+    signerOrProvider: signer,
+  })
 
   const addTask: AddTask = async (newData) => {
-    setTasks((prevState) => ({
-      data: [...prevState.data, newData],
-    }));
     try {
-      await contract.methods
-        .addTask(newData)
-        .send({ from: web3.eth.defaultAccount });
+      const tx = await contract?.addTask(newData.label);
+      tx.wait();
+      setTasks((prevState) => ({
+        data: [...prevState.data, newData],
+      }));
       console.log("Add task " + newData + " to blockchain");
     } catch {
       console.log("Failed to add task to EVM");
@@ -55,27 +51,52 @@ export default function Task() {
   };
 
   const removeTask: RemoveTask = async (id) => {
-    const newData = tasks.data.filter((ele) => ele.id !== id);
-    setTasks({ data: newData });
-
     try {
-      await contract.methods
-        .deleteTask(id)
-        .send({ from: web3.eth.defaultAccount });
+
+      const tx = await contract?.deleteTask(id);
+      tx.wait()
+
+      getAllItems();
+      alert("Task Removed successfully from the blockchain");
       console.log("Remove Task " + id + " from the blockchain");
+
     } catch {
+      alert ("An issue occured while removing this task!")
       console.log("Issue occured while removing task item-" + id);
     }
   };
 
-  const updateTask: UpdateTask = (id, newValue) => {
+  const updateTask: UpdateTask = async (id, newValue) => {
+
+    try {
+
+      const tx = await contract?.updateTask(id, newValue.label);
+      tx.wait()
+
     let updatedTask = tasks.data.map((item) =>
       item.id === id ? newValue : item
     );
     setTasks({ data: updatedTask });
+      alert ("Task " + id + "has been successfully removed from the blockchain");
+      console.log("Remove Task " + id + " from the blockchain");
+      
+    } catch {
+      alert ("An issue occured while removing task item " + id);
+      console.log("Issue occured while removing task item-" + id);
+    }
   };
 
-  const onToggleImportant: OnToggleImportant = (id) => {
+  const onToggleImportant: OnToggleImportant = async (id) => {
+
+    try {
+      await contract?.toggleImportance(id);
+      alert ("The importance of task " + id + "has been changed successfully!")
+      console.log("OnToggleImportant(): Change importance of task " + id);
+    } catch (error) {
+      alert ("An issue occured while changing the importance of task " + id)
+      console.log("Failed to change Status of task " + id + " in blockchain");
+    }
+
     const newData = tasks.data.map((ele) => {
       if (ele.id === id) {
         return { ...ele, important: !ele.important };
@@ -86,22 +107,23 @@ export default function Task() {
   };
 
   const onToggleCompleted: OnToggleCompleted = async (id) => {
+
+    try {
+      await contract?.markAsComplete(id);
+      alert ("The status of taks " + id + "has been successfully changed")
+      console.log("changeTaskStatus(): Change status of task " + id);
+    } catch (error) {
+      alert ("An issue occured while changing the status of task " + id)
+      console.log("Failed to change Status of task " + id + " in blockchain");
+    }
+
     const newData = tasks.data.map((ele) => {
       if (ele.id === id) {
-        return { ...ele, completed: !ele.completed };
+        return { ...ele, isCompleted: !ele.completed };
       }
       return ele;
     });
     setTasks({ data: newData });
-
-    try {
-      await contract.methods
-        .updateStatus(id)
-        .send({ from: web3.eth.defaultAccount });
-      console.log("changeTaskStatus(): Change status of task " + id);
-    } catch (error) {
-      console.log("Failed to change Status of task " + id + " in blockchain");
-    }
   };
 
   const updateSearch: UpdateSearch = (text) => {
@@ -129,9 +151,36 @@ export default function Task() {
     }
   };
 
+  const getAllItems = async function() {
+    const items = await contract?.getTasks();
+
+    const arrTasks = items.map((item: any) => {
+      return {
+        id: item.id.toNumber(),
+        label: item.task,
+        important: item.isImportant,
+        completed: item.isCompleted,
+        isDeleted: item.isDeleted,
+      }
+    }).filter((item: any) => {
+      return !item.isDeleted;
+    })
+    console.log({data: arrTasks})
+    
+    setTasks({data: arrTasks})
+  }
+
   const visibleTasks: ITask[] = filterTask(searchTask(tasks.data, term), filt);
   const completedTask = tasks.data.filter((item) => item.completed).length;
   const allTasks = tasks.data.length;
+  
+  useEffect(() => {
+    
+    if (!signer || !address) return
+
+    getAllItems();
+
+  }, [signer, address])
 
   return (
     <>

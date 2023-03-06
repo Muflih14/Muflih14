@@ -6,6 +6,7 @@ interface TaskListProps {
 }
 
 export default function TaskList({ tasks }: TaskListProps) {
+  
   const elements = tasks.map((task) => {
     return (
       <div className="list-group-item" key={task.id}>
@@ -13,6 +14,7 @@ export default function TaskList({ tasks }: TaskListProps) {
       </div>
     );
   });
+
   return (
     <>
       {tasks.length > 0 ? (

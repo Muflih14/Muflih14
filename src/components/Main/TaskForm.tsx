@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { AddTask, IEdit } from "../../types";
 
+
 interface TaskFormProps {
   addTask: AddTask;
   edit?: IEdit;
 }
 
 export default function TaskForm({ addTask, edit }: TaskFormProps) {
+
   const [state, setState] = useState(edit ? edit.label : "");
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value);
@@ -16,17 +19,24 @@ export default function TaskForm({ addTask, edit }: TaskFormProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!state || /^\s*$/.test(state)) return;
-    addTask({
+
+    // new task obj
+    const task = {
       id: Date.now(),
       label: state,
       important: false,
       completed: false,
-    });
+      isDeleted: false,
+    };
+    console.log("🚀 ~ file: TaskForm.tsx:30 ~ handleSubmit ~ task", task)
+
+    addTask(task)
+
     setState("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="botton-panel d-flex">
+    <form onSubmit={(e)=>handleSubmit(e)} className="botton-panel d-flex">
       {edit ? (
         <>
           <input

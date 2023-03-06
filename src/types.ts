@@ -3,6 +3,7 @@ export interface ITask {
   label: string;
   important: boolean;
   completed: boolean;
+  isDeleted: boolean;
 }
 export interface IData {
   data: ITask[];

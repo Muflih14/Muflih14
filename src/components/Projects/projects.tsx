@@ -15,9 +15,6 @@ function Projects() {
           <button className="list-button">
             <Link to="/taskList">Become a Solidity Developer</Link>
           </button>
-          <button className="list-button"> Become a Soldier </button>
-          <button className="list-button"> Become a Teacher</button>
-          <button className="list-button"> Become a designer </button>
         </p>
       </div>
     </>
